@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiCategoryController;
+use App\Http\Controllers\Api\ApiProductController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -18,3 +19,8 @@ Route::get('hello', function () {
 Route::get('categories', [ApiCategoryController::class,'index']);
 Route::post('categories', [ApiCategoryController::class,'store']);
 Route::delete('destroycategories/{id}', [ApiCategoryController::class,'destroy']);
+Route::put('put-categories/{id}', [ApiCategoryController::class,'update']);
+
+//product 
+Route::get('products', [ApiProductController::class,'index']);
+Route::post('products', [ApiProductController::class,'store']);

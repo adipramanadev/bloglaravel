@@ -67,4 +67,25 @@ class ApiCategoryController extends Controller
                     
                 }
     }
+
+    //function update 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'namecategory'=>'required'
+        ]);
+        $category = Category::find($id);
+        if ($category) {
+            $category->update($request->all());
+            return response()->json([
+                'msg'=>true,
+                'data'=>$category
+            ],200);
+        } else{
+            return response()->json([
+                'msg'=>false, 
+                'data'=>'category not found'
+            ],404);
+        }
+    }
 }
