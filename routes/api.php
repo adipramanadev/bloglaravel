@@ -24,3 +24,5 @@ Route::put('put-categories/{id}', [ApiCategoryController::class,'update']);
 //product 
 Route::get('products', [ApiProductController::class,'index']);
 Route::post('products', [ApiProductController::class,'store']);
+Route::put('put-products/{id}', [ApiProductController::class,'update']);
+Route::delete('destroy-product/{id}', [ApiProductController::class,'destroy']);

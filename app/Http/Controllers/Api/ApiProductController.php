@@ -12,7 +12,7 @@ class ApiProductController extends Controller
     //index 
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with('categories')->get();
         return response()->json($products);
     }
 
@@ -22,6 +22,7 @@ class ApiProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'category_id'=>'required',
             'stock' => 'required|integer|min:0',
             'description' => 'nullable|string',
         ]);
@@ -41,4 +42,51 @@ class ApiProductController extends Controller
             ],404);
         }
     }
+
+    public function update(Request $request, $id)
+        {
+            // Validate incoming request data
+            $validated = $request->validate([
+                'name' => 'sometimes|required|string|max:255',
+                'price' => 'sometimes|required|numeric|min:0',
+                'stock' => 'sometimes|required|integer|min:0',
+                'description' => 'nullable|string',
+            ]);
+
+            // Find the product by ID
+            $product = Product::find($id);
+
+            // Check if product exists
+            if (!$product) {
+                return response()->json([
+                    'msg' => false,
+                    'data' => 'Product not found'
+                ], 404);
+            }
+
+            // Update the product with validated data
+            $product->update($validated);
+
+            // Return a success response with the updated product data
+            return response()->json([
+                'msg' => true,
+                'data' => $product
+            ], 200);
+        }
+    
+
+    public function destroy($id)
+    {
+        // Find the product by ID
+        $product = Product::find($id);
+
+        //delete Data product 
+        $product->delete();
+        return response()->json([
+            'msg' => true,
+            'data' => 'product deleted'
+        ]);
+    }
+
 }
+
