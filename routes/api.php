@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\ApiProductController;
+use App\Http\Controllers\Api\ApiOrderController;
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -26,3 +27,6 @@ Route::get('products', [ApiProductController::class,'index']);
 Route::post('products', [ApiProductController::class,'store']);
 Route::put('put-products/{id}', [ApiProductController::class,'update']);
 Route::delete('destroy-product/{id}', [ApiProductController::class,'destroy']);
+
+//order 
+Route::apiResource('get-order', ApiOrderController::class);
