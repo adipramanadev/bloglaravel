@@ -10,6 +10,22 @@ use App\Models\OrderProduct;
 
 class ApiOrderController extends Controller
 {
+    public function index(Request $request)
+    {
+        try {
+            $perPage = $request->input('per_page', 15); // Number of orders per page, default to 15
+            $orders = Order::with('orderProducts')->paginate($perPage);
+
+            return response()->json($orders, 200);
+        } catch (\Exception $e) {
+            Log::error('Failed to retrieve orders: ' . $e->getMessage(), ['exception' => $e]);
+            return response()->json([
+                'message' => 'Error retrieving orders',
+                'details' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         try {
