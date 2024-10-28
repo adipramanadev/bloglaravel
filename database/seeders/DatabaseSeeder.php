@@ -17,7 +17,9 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
+        //     'password' =>bycript('password')
         // ]);
         $this->call(CategorySeeder::class);
+        $this->call(UserSeeder::class);
     }
 }

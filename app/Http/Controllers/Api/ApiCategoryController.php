@@ -15,11 +15,7 @@ class ApiCategoryController extends Controller
         $categories = Category::all();
         //redirect json 
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'categories retrieved successfully',
-            'data' => $categories
-        ]);
+        return response()->json($categories);
     }
 
     //post data api 
