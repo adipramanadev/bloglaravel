@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthController;
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
 
+
 // Public route for testing
 Route::get('hello', function () {
     return 'Hello, World!';
