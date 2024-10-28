@@ -11,34 +11,33 @@ class AuthController extends Controller
     // Handle login request
     public function login(Request $request)
     {
-        // Validate the incoming request
-        $credentials = $request->validate([
+         // Method untuk login
+    
+        $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // Attempt to authenticate the user using the credentials
-        if (Auth::attempt($credentials)) {
-            // Regenerate session to prevent session fixation attacks
-            $request->session()->regenerate();
-
-            // Get the authenticated user
+        // Coba login menggunakan kredensial yang diberikan
+        if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
+            $token = $user->createToken('API Token')->plainTextToken;
 
-            // Generate an API token for the user
-            $token = $user->createToken('ApiToken')->plainTextToken;
-
-            // Return a successful response with the token
             return response()->json([
                 'message' => 'Login successful',
-                'user' => $user,
                 'token' => $token,
+                'user' => $user,
             ], 200);
         }
 
-        // Return a failed response for invalid credentials
         return response()->json([
-            'message' => 'Invalid credentials',
-        ], 401); // 401 Unauthorized
+            'message' => 'Invalid login credentials'
+        ], 401);
     }
+
+    public function user(Request $request)
+    {
+        return response()->json($request->user());
+    }
+    
 }
