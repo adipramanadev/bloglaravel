@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -33,6 +34,16 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Invalid login credentials'
         ], 401);
+    }
+
+    //lgoutnya 
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        
+        return  response()->json([
+            'message' => 'Logged out successfully'
+        ],200);
     }
 
     public function user(Request $request)

@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 // Public login route
 Route::post('login', [AuthController::class, 'login'])->name('login');
 Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
+Route::post('/logout', [AuthController::class,'logout'])->middleware('auth:sanctum');
 
 // Public route for testing
 Route::get('hello', function () {
